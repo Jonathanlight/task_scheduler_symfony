@@ -1,8 +1,16 @@
 version: '3.9'
 
+networks:
+  symfony:
+    driver: bridge
+
+volumes:
+  symfony_db:
+  rabbitmq_data:
+
 services:
   apache:
-    container_name: template_docker_apache
+    container_name: task_scheduler_apache
     build: ./docker/build/apache
     ports:
       - '8000:80'
@@ -16,22 +24,44 @@ services:
       - './docker/etc/php/php-cli.ini:/usr/local/etc/php/php-cli.ini'
       - './docker/etc/apache/ssl/:/etc/apache2/conf/ssl'
       - './app/symfony:/var/www/symfony'
+    networks:
+      - symfony
   mysql:
-    container_name: template_docker_mysql
+    container_name: task_scheduler_mysql
     image: mysql:5.7
     ports:
       - "3306:3306"
     volumes:
       - './docker/etc/mysql/my.cnf:/etc/mysql/conf.d/my.cnf'
-      - './docker/etc/mysql/data:/var/lib/mysql'
+      - 'symfony_db:/var/lib/mysql:cached'
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: symfony_db
+    networks:
+      - symfony
 
   phpmyadmin:
-    container_name: template_docker_phpmyadmin
+    container_name: task_scheduler_phpmyadmin
     ports:
       - '8001:80'
     image: nazarpc/phpmyadmin
+    networks:
+      - symfony
     depends_on:
       - mysql
+
+  rabbitmq:
+    container_name: task_scheduler_rabbitmq
+    image: rabbitmq:3-management
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    environment:
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: root
+    volumes:
+      - 'rabbitmq_data:/var/lib/rabbitmq:cached'
+    depends_on:
+      - mysql
+    networks:
+      - symfony

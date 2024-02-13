@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Task Home{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Task ✅</h1>
+
+    <div class="row">
+
+        <div class="col-md-6">
+            <h2>Task List</h2>
+            <hr>
+
+            <div class="task">
+                {% for task in tasks %}
+                    <article>
+                        {{ task.state ? '✅' : '❌' }} -
+                        {{ task.name }}
+
+                        <a href="{{ path('run_task', {'id': task.id }) }}" class="btn btn-primary">Valide Task</a>
+                    </article>
+
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h2>Add Task</h2>
+            {{ form_start(form) }}
+                {{ form_row(form.name) }}
+                {{ form_row(form.description) }}
+                {{ form_row(form.priority) }}
+                <hr>
+                <button type="submit" class="btn btn-primary">Add Task</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+{% endblock %}

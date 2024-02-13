@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en" trgLang="en">
+    <file id="messages.en">
+        <unit id="CW5Rulg" name="label.high">
+            <segment>
+                <source>label.high</source>
+                <target>High</target>
+            </segment>
+        </unit>
+        <unit id="yO2Rj4B" name="label.low">
+            <segment>
+                <source>label.low</source>
+                <target>Low</target>
+            </segment>
+        </unit>
+        <unit id="AZX21gt" name="label.medium">
+            <segment>
+                <source>label.medium</source>
+                <target>Medium</target>
+            </segment>
+        </unit>
+    </file>
+</xliff>

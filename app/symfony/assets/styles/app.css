@@ -1,15 +1,15 @@
+.task {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-.home-img-content{
-    width: 100%;
-    height: 300px;
-    background-image: url('https://wallpapercave.com/wp/wp6715555.jpg');
-    background-position: center;
-}
-
-.btn {
-    @apply bg-blue-500 text-white-50 font-bold py-2 px-4 rounded;
+    & article {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
 }
